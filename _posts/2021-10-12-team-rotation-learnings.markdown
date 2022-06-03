@@ -13,7 +13,7 @@ toc_sticky: true
 ---
 
 Introduction to [Glovo](https://about.glovoapp.com/):
-> Glovo is a Spanish tech company that provides innovative solutions to connect customers, businesses and couriers to provide delivery > services, and it is the fastest-growing multicategory player in Europe, Western Asia and Africa.
+> Glovo is a Spanish tech company that provides innovative solutions to connect customers, businesses and couriers to provide delivery services, and it is the fastest-growing multicategory player in Europe, Western Asia and Africa.
 
 
 

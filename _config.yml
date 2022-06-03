@@ -112,8 +112,8 @@ comments:
   disqus:
     shortname: marcospaulucci
 
-# analytics:
-#   provider: "google-gtag"
-#   google:
-#     tracking_id: "G-1G37QTGQ7N"
-#     anonymize_ip: false # default
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "G-1G37QTGQ7N"
+    anonymize_ip: false # default
