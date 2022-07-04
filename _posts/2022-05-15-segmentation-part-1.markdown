@@ -22,8 +22,6 @@ Introduction to [Glovo](https://about.glovoapp.com/):
 # Part 1: What is segmentation and why do we need it?
 
 
-
-
 Segmentation was a challenging and interesting project that my colleague and friend [Ahmad](https://medium.com/@ahmad.ramadan-hamouda?source=post_page-----8d2ecef2549a--------------------------------) and I leaded, designed and implemented for our cluster and the whole company. Customer segmentation can be summarized by [Wikipedia](https://en.wikipedia.org/wiki/Market_segmentation) as:
 "dividing a broad consumer or business market, normally consisting of existing and potential customers, into sub-groups of consumers (known as segments) based on some type of shared characteristics".
 The idea of segmenting the customer base had been around for more than an year at Glovo, with ongoing debates about how and who should take it. It seemed like a big challenge and pretty scary for some teams, but not for us! We had our own ideas about how to approach the different challenges of such a system, and finally after a long wait we got the opportunity to officially take on the project.
@@ -103,4 +101,4 @@ Our segmentations component would serve data to the rest of the Glovo ecosystem 
 
 We assessed the nonfunctional requirements and quickly realized that the segment’s calculation flows were quite different from the serving data; especially in terms of data volume and required latency. This led us to split calculations and reads into two different components on the architectural level. The **Segments Core** would be responsible for calculating the segments by processing vast and diverse types of data. The **Segment Store** would be responsible for serving the calculated segments to the rest of the system, with high availability and low latency. Having these two separate components would also allow us to choose the appropriate technologies for each task.
 
-If you are interested to know what the architecture looks like check part 2 "Segmentation service zoom in"!
+If you are interested to know what the architecture looks like check [part 2 "Segmentation service zoom in"!](https://marcospaulucci.dev/audience%20targeting,%20microservices,%20big%20data/segmentation-part-2/)

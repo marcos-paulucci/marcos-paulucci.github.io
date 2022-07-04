@@ -22,7 +22,7 @@ toc_sticky: true
 Note: This post is an adaptation of my original post in Glovo's Medium blog [Customer Segmentation at Glovo
 Part 2: Segmentation system design](https://medium.com/glovo-engineering/customer-segmentation-at-glovo-8b46a787ac5e).
 
-In part 1, we talked about the customer segmentation needs at Glovo and why we need to customize the customer’s UX. For example, we needed to target specific audiences for certain discounts. We also discussed the need to separate the segment’s calculations task from the segment’s restful API. In part 2, we will dive into the two components: explaining their respective responsibilities and the overall architecture.
+In [part 1](https://marcospaulucci.dev/audience%20targeting,%20microservices,%20big%20data/segmentation-part-1/), we talked about the customer segmentation needs at Glovo and why we need to customize the customer’s UX. For example, we needed to target specific audiences for certain discounts. We also discussed the need to separate the segment’s calculations task from the segment’s restful API. In part 2, we will dive into the two components: explaining their respective responsibilities and the overall architecture.
 
 We named the two components "Core" and "Store"; the Core is responsible for performing Segment calculations in a scheduled fashion (every X minutes/hours), based on the segment definitions provided; the Store is in charge of segment configuration management and auditing, and also serving the calculated segments to the rest of the system. Also, between these components, we need integrations to exchange segment configurations and segment results, to finally expose those results to the external parties.
 
