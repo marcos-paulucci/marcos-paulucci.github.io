@@ -12,53 +12,62 @@ toc_icon: code
 toc_sticky: true
 ---
 
+{:refdef: style="text-align: center;"}
+![system design book](/assets/images/audience-targeting.jpeg){:height="200px" width="200px"}
+{: refdef}
+
 Introduction to [Glovo](https://about.glovoapp.com/):
 > Glovo is a Spanish tech company that provides innovative solutions to connect customers, businesses and couriers to provide delivery services, and it is the fastest-growing multicategory player in Europe, Western Asia and Africa.
 
 # Part 1: What is segmentation and why do we need it?
 
-{:refdef: style="text-align: center;"}
-![system design book](/assets/images/audience-targeting.jpeg){:height="200px" width="200px"}
-{: refdef}
+
+
+
+Segmentation was a challenging and interesting project that my colleague and friend [Ahmad](https://medium.com/@ahmad.ramadan-hamouda?source=post_page-----8d2ecef2549a--------------------------------) and I leaded, designed and implemented for our cluster and the whole company. Customer segmentation can be summarized by [Wikipedia](https://en.wikipedia.org/wiki/Market_segmentation) as:
+"dividing a broad consumer or business market, normally consisting of existing and potential customers, into sub-groups of consumers (known as segments) based on some type of shared characteristics".
+The idea of segmenting the customer base had been around for more than an year at Glovo, with ongoing debates about how and who should take it. It seemed like a big challenge and pretty scary for some teams, but not for us! We had our own ideas about how to approach the different challenges of such a system, and finally after a long wait we got the opportunity to officially take on the project.
+
+This post is an adaptation of my original post in in Glovo's Medium blog: [Customer Segmentation at Glovo
+Part 1](https://medium.com/glovo-engineering/customer-segmentation-at-glovo-8d2ecef2549a).
+
 
 ## Business context
 
 
-Glovo has discount campaigns of different kinds. BeforeBefore this project, these campaigns were targeting the whole customer base, regardless of each customer's behavior and preference. For Glovo and its partners, this was highly inefficient in terms of budget and [ROI](https://www.investopedia.com/terms/r/returnoninvestment.asp#:~:text=Return%20on%20investment%20(ROI)%20is,relative%20to%20the%20investment%27s%20cost.), limiting customer acquisition and retention, and overall customer experience. We didn't have a system capable of classifying the most appropriate customers for each kind of discount campaign: 
+Glovo orchestrates a variety of discount campaigns. Before the Segmentation Service, these campaigns targeted our entire customer base, regardless of individual customer behavior or preference. For Glovo and its partners, this was highly inefficient in terms of budget and ROI, limiting customer acquisition, retention, and overall customer experience. We didn’t have a system capable of classifying the most appropriate discount campaign for each kind of customer. For example:
 - users who never ordered from a specific store
 - users who haven't ordered in the last month
 - users who order recurrently
 
-We started first by providing a definition of this new concept, which we called "Segmentation",  and the new [bounded context](https://martinfowler.com/bliki/BoundedContext.html) was called "Segments". Its responsibility was to "categorize customers based on different traits such as their profile, their order history, [MParticle](https://www.mparticle.com/?utm_source=google&utm_medium=paid-search&utm_campaign=europe-english-google-paid-search-all-brand&utm_term=mparticle&utm_content=brand-mparticle&persona=brand&gclid=Cj0KCQjwr-SSBhC9ARIsANhzu14iN4DnVLGer1sDd3GN2DGH1Y3lb2fHgezxAacIAXxTDCD4qwU0G4EaAkL8EALw_wcB) analytic events, machine learning models, among others".
+We began by providing a definition of this new concept called “Segmentation” and a new [bounded context](https://martinfowler.com/bliki/BoundedContext.html) called “Segments”; based on [DDD](https://martinfowler.com/tags/domain%20driven%20design.html) concepts. Its responsibility was to “categorize customers based on different traits such as their profile, their order history, analytic events, and machine learning models”.
 
 
 
 ## Scope for an MVP
 
-We had the boundaries of our system established, and next we had to prioritize among the multiple stakeholders interested in different segment types. We needed a system capable of supporting most of their use cases, so we had to design it in the right way. Our first segment types were these:
+We established the boundaries of our system and prioritized among the multiple stakeholders interested in different segment types. We needed a system capable of supporting most of their use cases. Therefore, we had to design the system properly with a focus on time to market, service response, scalability, and extensibility. Our first segment types were:
 - New customers with 0 orders in certain stores
 - Customers ordering recurrently from some stores
 - Inactive customers who used to order in the past but they haven't done so in a certain amount of time
 
-Time to market was a hard constraint, so we committed to delivering a solution in only 3 months covering the first segmentation cases, but also be extensible to support different types of segments for the remaining and future use cases. 
+Time to market was a hard constraint, so we committed to delivering a solution in only 3 months. We aimed to cover the first segmentation cases but also build an extensible system, capable of supporting different types of segments for the remaining and future use cases.
 
 
-# Multi-variable problem
-
-There were multiple challenges and aspects to consider for this project.
+# Challenges
 
 
 ### Time-to-market
 
-One of the main core values for Glovo is Gas, as well our competitors and our partners were in deep need of this feature so we had to act fast and with vision.
+Our partners were in deep need and we didn’t want to lose their trust so we had to act fast and with vision.
 
 ### Scaling calculations
 
-We would start with only a few hundred segments, but very soon we should scale to hundreds of thousands. A single segment calculation would involve millions of customers and hundreds of millions of order history items. 
+We would start with only a few hundred segments but, shortly thereafter, would scale to hundreds of thousands of segments. A single segment calculation could involve millions of customers and hundreds of millions of order history items.
 
 ### Fast-growing data volume
 
-Not only the number of segments would grow, but also the customer base, order history, and any other new data source involved. We should be ready to process big data.
+Not only would the number of segments grow, but so would our customer base, order history, and other new data source involved. We had to prepare to process big data.
 
 ### Serving segments with high availability and low latency
 
@@ -78,8 +87,11 @@ Cost doesn't come only from marketing campaigns, but also from tech, ranging fro
 
 ### Customer UX validation
 
-We used [Feature toggles](https://martinfowler.com/articles/feature-toggles.html) and [AB testing](https://en.wikipedia.org/wiki/A/B_testing) to customize each customer's UX and applicable discounts, compare the Return on Investment (ROI) against non-segmented discount campaigns, assessing also the cost of customer acquisition, the flexibility of defining new configurations, and scalability.
+We used [Feature toggles](https://martinfowler.com/articles/feature-toggles.html) and [AB testing](https://en.wikipedia.org/wiki/A/B_testing):
 
+- To customize each customer’s UX and applicable discounts
+- To compare the [Return on Investment (ROI)](https://en.wikipedia.org/wiki/Return_on_investment) against non-segmented discount campaigns
+- To assess the cost of customer acquisition, flexibility of defining new configurations, and scalability
 
 # High-level architecture 
 
@@ -89,6 +101,6 @@ Our segmentations component would serve data to the rest of the Glovo ecosystem 
 ![system design book](/assets/images/high-level.jpeg)
 {: refdef}
 
-We proceeded to assess the nonfunctional requirements, and we quickly realized that the segment's calculation flows were pretty different from the serving data, especially in terms of data volume and required latency. This led us to split calculations and reads into two different components on the architectural level: the ** Segments Core **, responsible for calculating the segments we needed, capable of processing vast and diverse types of data; the ** Segment Store **, responsible for serving the calculated segments to the rest of the system, with high availability and low latency. Having these two separate components would also allow us to choose the appropriate technologies for each task.
+We assessed the nonfunctional requirements and quickly realized that the segment’s calculation flows were quite different from the serving data; especially in terms of data volume and required latency. This led us to split calculations and reads into two different components on the architectural level. The **Segments Core** would be responsible for calculating the segments by processing vast and diverse types of data. The **Segment Store** would be responsible for serving the calculated segments to the rest of the system, with high availability and low latency. Having these two separate components would also allow us to choose the appropriate technologies for each task.
 
 If you are interested to know what the architecture looks like check part 2 "Segmentation service zoom in"!

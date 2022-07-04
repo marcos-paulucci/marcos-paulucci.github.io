@@ -19,7 +19,7 @@ Introduction to [Glovo](https://about.glovoapp.com/):
 
 # Discounts inception
 
-This post is a replica of my [original post](https://medium.com/glovo-engineering/the-discounts-microservice-14f4d4e4d6c9) in Glovo's Medium blog.
+This post is a copy of my [original post](https://medium.com/glovo-engineering/the-discounts-microservice-14f4d4e4d6c9) in Glovo's Medium blog.
 
 The Discount microservice was an interesting and challenging project. I was appointed to work on the architecture design and the analysis of the extraction process from the monolith. Later after the analysis, we would work on the implementation of an MVP.
 
