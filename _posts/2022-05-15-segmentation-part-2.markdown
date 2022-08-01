@@ -79,9 +79,9 @@ We had committed to an SLO of p99 < 50ms and to achieve it we leveraged the even
 ![system design book](/assets/images/cache-aside.jpg)
 {: refdef}
 
-If you want to know the results and the current status of this project go and read part three!
 
-## Rollout Checklist
+
+# Rollout Checklist
 
 Before we rolled out the project, we had a large checklist to validate the readiness of the multiple components and clients. We prepared an exhaustive rollout plan to minimize the chances of failure and to be ready for possible rollbacks. We also ensured documentation is in a centralized place, including the design, observability links, and [OpenAPI Specification](https://swagger.io/specification/) of our Restful endpoints. The rollout would start in a single city, then expand to the whole country, and finally to other countries. The gradual increase in the traffic could unveil any errors or performance issues early. AB tests were used to validate the results.
 
